@@ -2,10 +2,10 @@
 
 BluetoothSerial SerialBT;
 
-const int LIMITE_PORTA = 20;
+const int LIMITE_PORTA = 10;
 
-#define TRIGGER_PIN D33
-#define ECHO_PIN D25
+#define TRIGGER_PIN 33
+#define ECHO_PIN 25
 
 long duration;
 int distance;
@@ -32,7 +32,7 @@ void setup() {
 void loop() {
   duration = readUltrasonicDistance(TRIGGER_PIN, ECHO_PIN);
   distance = duration * 0.0343 / 2;
-  
+
   if (distance > LIMITE_PORTA) {
     estaAberta = true;
   } else {
@@ -40,19 +40,19 @@ void loop() {
   }
 
   if (estaAberta != ultimoEstadoAberta) {
-    
+
     if (estaAberta) {
       SerialBT.println("ABERTA");
-      Serial.println("Mudou para: ABERTA"); 
+      Serial.println("Mudou para: ABERTA");
     } else {
       SerialBT.println("FECHADA");
       Serial.println("Mudou para: FECHADA");
     }
-    
+
     ultimoEstadoAberta = estaAberta;
-    
-    delay(500); 
+
+    delay(300);
   }
 
-  delay(100); 
+  delay(100);
 }
